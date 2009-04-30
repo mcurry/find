@@ -1,5 +1,5 @@
 /*
- * App Model custom find types
+ * CakePHP plugin for create custom find types
  * Copyright (c) 2009 Matt Curry
  * www.PseudoCoder.com
  * http://github.com/mcurry/find
@@ -11,15 +11,21 @@
  */
 
 /* Description */
-A CakePHP code snippet that allows for creating custom find types by simply adding a new method to the model.
+A CakePHP plugin that allows for creating custom find types by simply adding a new method to the model.
 
-/* Instructions */
-1) Drop the snippet in /app/app_model.php
+/* Install */
+1) Download the plugin to /app/plugin/find
 
-2) Create find types with the pattern:
+2) Include the FindAppModel in your app_model.php
+App::import('Model', 'Find.app_model');
+
+3) Have your AppModel extend FindAppModel
+
+/* Usage */
+1) Create find types with the pattern:
 $this->Model->find('custom');
 
-3) In your model:
+2) In your model:
 function __findCustom($options) {
   //do find here
 }
