@@ -5,6 +5,9 @@
  * http://github.com/mcurry/find
  * http://www.pseudocoder.com/archives/2008/10/24/cakephp-custom-find-queriescakephp-custom-find-types/
  *
+ * Thanks to Daniel Salazar for the inspiration on pagination support
+ * http://code621.com/content/10/easy-pagination-using-matt-curry-s-custom-find-types
+ *
  * @author      Matt Curry <matt@pseudocoder.com>
  * @license     MIT
  *
@@ -17,7 +20,7 @@ A CakePHP plugin that allows for creating custom find types by simply adding a n
 1) Download the plugin to /app/plugin/find
 
 2) Include the FindAppModel in your app_model.php
-App::import('Model', 'Find.app_model');
+App::import('Vendor', 'Find.find_app_model');
 
 3) Have your AppModel extend FindAppModel
 
@@ -29,3 +32,13 @@ $this->Model->find('custom');
 function __findCustom($options) {
   //do find here
 }
+
+/* How To Paginate */
+This is pretty simple thanks Daniel Salazar (http://code621.com/content/10/easy-pagination-using-matt-curry-s-custom-find-types)
+1) Add "paginate" => true to the $options array will return the $query array, which is suitable for using as your controllers $paginate parameter.  
+   You probably want to merge that with the default controller pagination settings
+   $this->paginate = am($this->paginate, $this->Post->find('published', array('paginate' => true)));
+   $this->set('posts', $this->paginate());
+
+/* Why This Is A Vendor, Not A Model */
+When doing App::import on a model Cake checks that the AppModel class already exists, otherwise it tries to import.  Since the AppModel is depended on the FindAppModel, it won't exist and will try to be included, leading to a infinite loop.
