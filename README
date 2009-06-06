@@ -22,21 +22,24 @@ A CakePHP plugin that allows for creating custom find types by simply adding a n
 2) Include the FindAppModel in your app_model.php
 App::import('Vendor', 'Find.find_app_model');
 
-3) Have your AppModel extend FindAppModel
+3) Have your AppModel extend FindAppModel instead of Model
+class AppModel extends FindAppModel {
+
+}
 
 /* Usage */
-1) Create find types with the pattern:
-$this->Model->find('custom');
+1) Call custom find types with the pattern:
+$this->Model->find('custom_find_type');
 
-2) In your model:
-function __findCustom($options) {
+2) In your model create functions that match the find type with "__find" prefixed and the find type CamelCased:
+function __findCustomFindType($options) {
   //do find here
 }
 
 /* How To Paginate */
 This is pretty simple thanks Daniel Salazar (http://code621.com/content/10/easy-pagination-using-matt-curry-s-custom-find-types)
 1) Add "paginate" => true to the $options array will return the $query array, which is suitable for using as your controllers $paginate parameter.  
-   You probably want to merge that with the default controller pagination settings
+   You probably want to merge that with the default controller pagination settings.
    $this->paginate = am($this->paginate, $this->Post->find('published', array('paginate' => true)));
    $this->set('posts', $this->paginate());
 
